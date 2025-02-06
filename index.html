@@ -5,57 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Domicilios Fresmar</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Estilos específicos para el iframe */
+        #form-frame {
+            height: calc(100% - 72px) !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            border: none !important;
+        }
+    </style>
 </head>
-<body class="bg-blue-50 min-h-screen flex flex-col items-center justify-center">
-
+<body class="bg-blue-50">
     <!-- Menú Principal -->
-    <div id="main-menu" class="container mx-auto px-4 text-center">
-        <h1 class="text-3xl font-bold text-blue-600 mb-8">Sistema de Domicilios</h1>
+    <div id="main-menu" class="container mx-auto px-4 text-center min-h-screen flex flex-col items-center justify-center">
+        <h1 class="text-3xl font-bold text-blue-600 mb-8">Domicilios Fresmar Armenia</h1>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-lg">
             <button onclick="mostrarFormulario('pedido')" class="bg-blue-500 text-white text-xl font-bold w-full h-20 md:h-24 rounded-lg hover:bg-blue-600 flex items-center justify-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h18M4 8h16M3 21h18M5 8v13m14-13v13M8 8v13m8-13v13" />
                 </svg>
-                Pedido
+                Entrega-Pedido
             </button>
 
             <button onclick="mostrarFormulario('salida-almuerzo')" class="bg-green-500 text-white text-xl font-bold w-full h-20 md:h-24 rounded-lg hover:bg-green-600 flex items-center justify-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7v14" />
                 </svg>
-                Salida
+                Salida salida-almuerzo
             </button>
 
             <button onclick="mostrarFormulario('ingreso-almuerzo')" class="bg-yellow-500 text-white text-xl font-bold w-full h-20 md:h-24 rounded-lg hover:bg-yellow-600 flex items-center justify-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14" />
                 </svg>
-                Ingreso
+                Ingreso-almuerzo
             </button>
 
             <button onclick="mostrarFormulario('hora-salida')" class="bg-red-500 text-white text-xl font-bold w-full h-20 md:h-24 rounded-lg hover:bg-red-600 flex items-center justify-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10 9V3h4v6m-2 3v8m-6-6h12" />
                 </svg>
-                Salida
+                Fin Jornada
             </button>
         </div>
     </div>
 
     <!-- Contenedor para mostrar el formulario -->
-    <div id="form-container" class="hidden container mx-auto px-4 py-8 text-center">
-        <iframe id="form-frame" class="w-full h-screen border rounded-lg"></iframe>
-        <button onclick="volverAlMenu()" class="mt-6 bg-blue-700 text-white text-xl font-bold px-8 py-4 rounded-lg hover:bg-blue-800 shadow-lg">⬅ Volver al Menú</button>
+    <div id="form-container" class="hidden">
+        <iframe id="form-frame"></iframe>
+        
+        <!-- Botón fijo en la parte inferior -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4 flex justify-center">
+            <button onclick="volverAlMenu()" class="bg-blue-700 text-white text-xl font-bold px-8 py-4 rounded-lg hover:bg-blue-800">
+                ⬅ Volver al Menú
+            </button>
+        </div>
     </div>
 
     <!-- Script para mostrar formularios -->
     <script>
         const forms = {
-            'pedido': 'https://docs.google.com/forms/d/e/1FAIpQLSdFWOBqxxq_yTbSD5pizXB4rlR2p8cXP52GEdRwEUCErq3XJQ/viewform?usp=header',
-            'salida-almuerzo': 'https://docs.google.com/forms/d/e/1FAIpQLSdjzfUizS8jXSlsmXwpIohzh2Pfrd_DeJQaXOFJTCxy0BnEuw/viewform?usp=header',
-            'ingreso-almuerzo': 'https://docs.google.com/forms/d/e/1FAIpQLSee99mTIXB4xTerC12Xb9FNvQQnqzf2gxPO4y208PBeDveE5g/viewform?usp=header',
-            'hora-salida': 'https://docs.google.com/forms/d/e/1FAIpQLSc7nyeTc4b5mj8zu-a-wl6CLpRrngovSCNPqZ9Bp7e-vOdVBg/viewform?usp=header'
+            'pedido': 'https://docs.google.com/forms/d/e/1FAIpQLSdFWOBqxxq_yTbSD5pizXB4rlR2p8cXP52GEdRwEUCErq3XJQ/viewform?embedded=true',
+            'salida-almuerzo': 'https://docs.google.com/forms/d/e/1FAIpQLSdjzfUizS8jXSlsmXwpIohzh2Pfrd_DeJQaXOFJTCxy0BnEuw/viewform?embedded=true',
+            'ingreso-almuerzo': 'https://docs.google.com/forms/d/e/1FAIpQLSee99mTIXB4xTerC12Xb9FNvQQnqzf2gxPO4y208PBeDveE5g/viewform?embedded=true',
+            'hora-salida': 'https://docs.google.com/forms/d/e/1FAIpQLSc7nyeTc4b5mj8zu-a-wl6CLpRrngovSCNPqZ9Bp7e-vOdVBg/viewform?embedded=true'
         };
 
         function mostrarFormulario(tipo) {
